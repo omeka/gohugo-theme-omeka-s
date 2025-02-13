@@ -2,7 +2,7 @@
 <meta name="viewport" content="width=device-width">
 <!-- Redirect to configured homepage if at root -->
 {{ if .IsHome }}
-    <meta http-equiv="refresh" content="0;url={{ .Site.Params.homepage }}" />
+    <meta http-equiv="refresh" content="0;url={{ .Site.Params.homepage | relURL }}" />
 {{ end }}
 <!--Include scripts added by front matter -->
 {{ if .Params.js }}
