@@ -1,6 +1,20 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width">
+<!-- Redirect to configured homepage if at root -->
+{{ if .IsHome }}
+    <meta http-equiv="refresh" content="0;url={{ .Site.Params.homepage }}" />
+{{ end }}
+<!--Include scripts added by front matter -->
+{{ if .Params.js }}
+    {{ range .Params.js | uniq }}
+        <script src="{{ . | relURL }}"></script>
+    {{ end }}
+{{ end }}
+<!--Include styles added by front matter -->
+{{ if .Params.css }}
+    {{ range .Params.css | uniq }}
+        <link href="{{ . | relURL }}" rel="stylesheet" />
+    {{ end }}
+{{ end }}
 <title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ printf "%s | %s" .Title site.Title }}{{ end }}</title>
-{{ partial "site-style.html" . }}
-{{ partial "site-scripts.html" . }}
 

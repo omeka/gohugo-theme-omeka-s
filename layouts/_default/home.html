@@ -1,2 +1,4 @@
-{{/* Redirect to the homepage. */}}
-<meta http-equiv="refresh" content="0;url={{ .Site.Params.homepage }}" />
+{{ define "main" }}
+  <h1>{{ .Title }}</h1>
+  {{ .Content }}
+{{ end }}
