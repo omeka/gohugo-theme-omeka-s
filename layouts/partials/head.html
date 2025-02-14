@@ -2,8 +2,9 @@
 <meta name="viewport" content="width=device-width">
 
 <!-- Redirect to configured homepage if at root -->
-{{ if .IsHome }}
-    <meta http-equiv="refresh" content="0;url={{ .Site.Params.homepage | relURL }}" />
+{{ $homepage := .Site.Params.homepage }}
+{{ if and (.IsHome) ($homepage) }}
+    <meta http-equiv="refresh" content="0;url={{ $homepage | relURL }}" />
 {{ end }}
 
 <script src="{{ "js/main.js" | relURL }}"></script>
