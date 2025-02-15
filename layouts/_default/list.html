@@ -1,9 +1,30 @@
 {{ define "main" }}
   <h1>{{ .Title }}</h1>
   {{ .Content }}
-  {{ range .Paginator.Pages }}
-    <h2><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></h2>
-    {{ .Summary }}
-  {{ end }}
+  {{- template "_internal/pagination.html" . -}}
+  <table>
+    <thead>
+      <tr>
+        <th></th>
+        <th>Title</th>
+      </tr>
+    </thead>
+    <tbody>
+    {{ range .Paginator.Pages }}
+      {{ $page := . }}
+      {{ $thumbnailResource := false }}
+      {{ if .Params.thumbnailSpec.page }}
+          {{ $thumbnailPage := site.GetPage (.Params.thumbnailSpec.page) }}
+          {{ $thumbnailResource = $thumbnailPage.Resources.GetMatch (printf "%s*" (.Params.thumbnailSpec.resource)) }}
+      {{ else }}
+          {{ $thumbnailResource = resources.Get (.Params.thumbnailSpec.resource) }}
+      {{ end }}
+      <tr>
+        <td>{{ with $thumbnailResource }}<a href="{{ $page.RelPermalink }}"><img src="{{ .RelPermalink }}" height="50"></a>{{ end }}</td>
+        <td><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></td>
+      </tr>
+    {{ end }}
+    </tbody>
+  </table>
   {{- template "_internal/pagination.html" . -}}
 {{ end }}
