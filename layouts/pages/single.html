@@ -1,0 +1,6 @@
+{{ define "main" }}
+  {{ range .Resources.Match "blocks/*.md" }}
+    <div class="{{ .Params.class }}">{{ .Content }}</div>
+  {{ end }}
+  {{ .Content }}
+{{ end }}
