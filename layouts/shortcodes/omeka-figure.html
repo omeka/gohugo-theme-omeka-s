@@ -42,4 +42,9 @@ Renders an HTML figure element in any page context.
     {{ else if eq $type "video" }}
     </video>
     {{ end }}
+    {{ with .Get "caption" }}
+    <figcaption>
+        {{ . }}
+    </figcaption>
+    {{ end }}
 </figure>
