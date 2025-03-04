@@ -1,24 +1,10 @@
 {{ define "main" }}
-
-{{ $classes := slice }}
-{{ $inlineStyles := slice }}
-
-{{ if eq .Params.layout "grid" }}
-    {{ $classes = append "page-layout-grid" $classes }}
-    {{ $classes = append (printf "grid-template-columns-%s" .Params.layoutdata.grid_columns) $classes }}
-    {{ $inlineStyles = append (printf "column-gap: %spx;" .Params.layoutdata.grid_column_gap) $inlineStyles }}
-    {{ $inlineStyles = append (printf "row-gap: %spx;" .Params.layoutdata.grid_row_gap) $inlineStyles }}
-{{ else }}
-    {{ $classes = append "page-layout-normal" $classes }}
-{{ end }}
-
 <div class="blocks">
-    <div class="blocks-inner {{ delimit $classes " " }}" style={{ (delimit $inlineStyles " ") | safeCSS }}>
+    <div class="blocks-inner {{ delimit .Params.classes " " }}" style={{ (delimit .Params.inlineStyles " ") | safeCSS }}>
         {{ range .Resources.Match "blocks/*.md" }}
         <div class="{{ printf "block-%s" .Params.layout }}" style="">{{ .Content }}</div>
         {{ end }}
     </div>
 </div>
-
 {{ .Content }}
 {{ end }}
