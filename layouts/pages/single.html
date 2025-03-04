@@ -2,7 +2,9 @@
 <div class="blocks">
     <div class="blocks-inner {{ delimit .Params.classes " " }}" style={{ (delimit .Params.inlineStyles " ") | safeCSS }}>
         {{ range .Resources.Match "blocks/*.md" }}
-        <div class="{{ printf "block-%s" .Params.layout }}" style="">{{ .Content }}</div>
+        <div class="{{ delimit .Params.classes " " }}" style="{{ (delimit .Params.inlineStyles " ") | safeCSS }}">
+            {{ .Content }}
+        </div>
         {{ end }}
     </div>
 </div>
