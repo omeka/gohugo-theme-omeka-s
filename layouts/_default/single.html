@@ -1,7 +1,7 @@
 {{ define "main" }}
-  <h1>{{ .Title }}</h1>
-  {{ range .Resources.Match "blocks/*.md" }}
-    <div class="{{ .Params.class }}">{{ .Content }}</div>
-  {{ end }}
-  {{ .Content }}
+    <h1>{{ .Title }}</h1>
+    {{ range .Resources.Match "blocks/*.md" }}
+    <div class="{{ printf "resource-page-block-%s" .Params.layout }}">{{ .Content }}</div>
+    {{ end }}
+    {{ .Content }}
 {{ end }}

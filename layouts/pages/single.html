@@ -1,6 +1,6 @@
 {{ define "main" }}
 
-{{ $classes := slice "blocks" }}
+{{ $classes := slice }}
 {{ $inlineStyles := slice }}
 
 {{ if eq .Params.layout "grid" }}
@@ -12,10 +12,13 @@
     {{ $classes = append "page-layout-normal" $classes }}
 {{ end }}
 
-<div class="{{ delimit $classes " " }}" style={{ (delimit $inlineStyles " ") | safeCSS }}>
-    {{ range .Resources.Match "blocks/*.md" }}
-    <div class="{{ .Params.class }}">{{ .Content }}</div>
-    {{ end }}
+<div class="blocks">
+    <div class="blocks-inner {{ delimit $classes " " }}" style={{ (delimit $inlineStyles " ") | safeCSS }}>
+        {{ range .Resources.Match "blocks/*.md" }}
+        <div class="{{ printf "block-%s" .Params.layout }}" style="">{{ .Content }}</div>
+        {{ end }}
+    </div>
 </div>
+
 {{ .Content }}
 {{ end }}
