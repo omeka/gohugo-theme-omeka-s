@@ -1,20 +1,45 @@
 {{ define "main" }}
+
 {{ $pageLayoutClasses := .Params.classes }}
 {{ $pageLayoutInlineStyles := .Params.inlineStyles }}
+{{ $inBlockGroup := false }}
+{{ $blockGroupSpan := 0 }}
+{{ $blockGroupCurrentSpan := 0 }}
+
 <div class="blocks">
     <div class="blocks-inner {{ delimit $pageLayoutClasses " " }}" style={{ (delimit $pageLayoutInlineStyles " ") | safeCSS }}>
         {{ range .Resources.Match "blocks/*.md" }}
+
         {{ $blockLayoutClasses := .Params.classes }}
         {{ $blockLayoutInlineStyles := .Params.inlineStyles }}
+
         {{ with .Site.GetPage (printf "/assets/%s" .Params.layoutData.background_image_asset) }}
-        {{ with .Resources.GetMatch "file*" }}
-        {{ $blockLayoutInlineStyles = $blockLayoutInlineStyles | append (printf "background-image: url(\"%s\")" .RelPermalink ) }}
+            {{ with .Resources.GetMatch "file*" }}
+                {{ $blockLayoutInlineStyles = $blockLayoutInlineStyles | append (printf "background-image: url(\"%s\")" .RelPermalink ) }}
+            {{ end }}
         {{ end }}
+
+        {{ if eq .Params.layout "blockGroup" }}
+            {{ if $inBlockGroup }}</div>{{ end }}
+            {{ $inBlockGroup = true }}
+            {{ $blockGroupSpan = int .Params.data.span }}
+            {{ $blockGroupCurrentSpan = 0 }}
+            <div class="{{ delimit $blockLayoutClasses " " }}" style="{{ (delimit $blockLayoutInlineStyles " ") | safeCSS }}">
+        {{ else }}
+            <div class="{{ delimit $blockLayoutClasses " " }}" style="{{ (delimit $blockLayoutInlineStyles " ") | safeCSS }}">{{ .Content }}</div>
         {{ end }}
-        <div class="{{ delimit $blockLayoutClasses " " }}" style="{{ (delimit $blockLayoutInlineStyles " ") | safeCSS }}">
-            {{ .Content }}
-        </div>
+        {{ if $inBlockGroup }}
+            {{ if eq $blockGroupCurrentSpan $blockGroupSpan }}
+                </div>
+                {{ $inBlockGroup = false }}
+            {{ else }}
+                {{ $blockGroupCurrentSpan = add $blockGroupCurrentSpan 1 }}
+            {{ end }}
         {{ end }}
+
+        {{ end }}
+
+        {{ if $inBlockGroup }}</div>{{ end }}
     </div>
 </div>
 {{ .Content }}
