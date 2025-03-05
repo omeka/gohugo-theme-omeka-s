@@ -1,8 +1,17 @@
 {{ define "main" }}
+{{ $pageLayoutClasses := .Params.classes }}
+{{ $pageLayoutInlineStyles := .Params.inlineStyles }}
 <div class="blocks">
-    <div class="blocks-inner {{ delimit .Params.classes " " }}" style={{ (delimit .Params.inlineStyles " ") | safeCSS }}>
+    <div class="blocks-inner {{ delimit $pageLayoutClasses " " }}" style={{ (delimit $pageLayoutInlineStyles " ") | safeCSS }}>
         {{ range .Resources.Match "blocks/*.md" }}
-        <div class="{{ delimit .Params.classes " " }}" style="{{ (delimit .Params.inlineStyles " ") | safeCSS }}">
+        {{ $blockLayoutClasses := .Params.classes }}
+        {{ $blockLayoutInlineStyles := .Params.inlineStyles }}
+        {{ with .Site.GetPage (printf "/assets/%s" .Params.layoutData.background_image_asset) }}
+        {{ with .Resources.GetMatch "file*" }}
+        {{ $blockLayoutInlineStyles = $blockLayoutInlineStyles | append (printf "background-image: url(\"%s\")" .RelPermalink ) }}
+        {{ end }}
+        {{ end }}
+        <div class="{{ delimit $blockLayoutClasses " " }}" style="{{ (delimit $blockLayoutInlineStyles " ") | safeCSS }}">
             {{ .Content }}
         </div>
         {{ end }}
