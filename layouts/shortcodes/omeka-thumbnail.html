@@ -1,21 +1,27 @@
 {{/*
 Renders an HTML figure element in any page context.
 
-@param {string} [type] The type of thumbnail (square, medium, thumbnail).
-@param {string} [page] The path to a content page object. If not given, assumes resource is the full path to a global (asset) resource.
-@param {string} [resource] The resource name (prefix or full).
-
 @returns {template.HTML}
 */}}
 
 {{ $height := .Get "height" }}
-{{ $resource := false }}
+{{ $imgResource := false }}
+{{ $linkResource := false }}
 
-{{ if .Get "page" }}
-    {{ $page := site.GetPage (.Get "page") }}
-    {{ $resource = $page.Resources.GetMatch (printf "%s*" (.Get "resource")) }}
-{{ else }}
-    {{ $resource = resources.Get (.Get "resource") }}
+{{ if and (.Get "imgPage") (.Get "imgResource") }}
+    {{ $imgPage := site.GetPage (.Get "imgPage") }}
+    {{ $imgResource = $imgPage.Resources.GetMatch (printf "%s*" (.Get "imgResource")) }}
+{{ else if (.Get "imgResource") }}
+    {{ $imgResource = resources.Get (.Get "imgResource") }}
 {{ end }}
 
-<img src="{{ with $resource }}{{ .RelPermalink }}{{ end }}" {{ with $height }}height="{{ . }}"{{ end }}>
+{{ if and (.Get "linkPage") (.Get "linkResource") }}
+    {{ $linkPage := site.GetPage (.Get "linkPage") }}
+    {{ $linkResource = $linkPage.Resources.GetMatch (printf "%s*" (.Get "linkResource")) }}
+{{ else if (.Get "linkPage") }}
+    {{ $linkResource = site.GetPage (.Get "linkPage") }}
+{{ end }}
+
+{{ with $linkResource }}<a href="{{ .RelPermalink }}">{{ end }}
+{{ with $imgResource }}<img src="{{ .RelPermalink }}"{{ with $height }} height="{{ . }}"{{ end }}>{{ end }}
+{{ with $linkResource }}</a>{{ end }}
