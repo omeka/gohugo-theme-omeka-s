@@ -27,9 +27,7 @@
             <div class="{{ delimit $blockLayoutClasses " " }}" style="{{ (delimit $blockLayoutStyles " ") | safeCSS }}">
         {{ else }}
             <div class="{{ delimit $blockLayoutClasses " " }}" style="{{ (delimit $blockLayoutStyles " ") | safeCSS }}">
-                {{ with .Params.container }}<div class="{{ delimit .classes " "}}">{{ end }}
                 {{ .Content }}
-                {{ with .Params.container }}</div>{{ end }}
             </div>
         {{ end }}
         {{ if $inBlockGroup }}
