@@ -1,0 +1,19 @@
+{{ $pages := where site.RegularPages "Section" (.Get "section") }}
+<ul>
+{{ range $pages.Limit (.Get "limit" | int) }}
+    {{ $thumbnailResource := false }}
+    {{ if .Params.thumbnailSpec.page }}
+        {{ $thumbnailPage := site.GetPage (.Params.thumbnailSpec.page) }}
+        {{ $thumbnailResource = $thumbnailPage.Resources.GetMatch (printf "%s*" (.Params.thumbnailSpec.resource)) }}
+    {{ else }}
+        {{ $thumbnailResource = resources.Get (.Params.thumbnailSpec.resource) }}
+    {{ end }}
+    <li>
+        <a href="{{ .RelPermalink }}">
+            {{ with $thumbnailResource }}<img src="{{ .RelPermalink }}" height="50">{{ end }}
+            <span>{{ .LinkTitle }}</span>
+        </a>
+        {{ with .Params.description }}<div>{{ . }}</div>{{ end }}
+    </li>
+{{ end }}
+</ul>
