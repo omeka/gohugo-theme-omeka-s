@@ -1,8 +1,8 @@
 {{ define "main" }}
     <h2>{{ .Title }}</h2>
     {{ .Content }}
-    {{- template "_internal/pagination.html" . -}}
-    <ul>
+    <div class=”browse-controls”>{{- template "_internal/pagination.html" . -}}</div>
+    <ul class="resource-list">
     {{ range .Paginator.Pages }}
         {{ $thumbnailResource := false }}
         {{ if .Params.thumbnailSpec.page }}
@@ -11,14 +11,14 @@
         {{ else }}
             {{ $thumbnailResource = resources.Get (.Params.thumbnailSpec.resource) }}
         {{ end }}
-        <li>
-            <a href="{{ .RelPermalink }}">
-                {{ with $thumbnailResource }}<img src="{{ .RelPermalink }}" height="50">{{ end }}
+        <li class="resource">
+            <a href="{{ .RelPermalink }}" class="resource-link">
+                {{ with $thumbnailResource }}<img src="{{ .RelPermalink }}" height="50" alt="">{{ end }}
                 <span>{{ .LinkTitle }}</span>
             </a>
-            {{ with .Params.description }}<div>{{ . }}</div>{{ end }}
+            {{ with .Params.description }}<div class="description">{{ . }}</div>{{ end }}
         </li>
     {{ end }}
     </ul>
-    {{- template "_internal/pagination.html" . -}}
+    <div class=”browse-controls”>{{- template "_internal/pagination.html" . -}}</div>
 {{ end }}
