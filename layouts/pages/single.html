@@ -8,7 +8,7 @@
 
 <div class="blocks">
     <div class="blocks-inner {{ delimit $pageLayoutClasses " " }}" style={{ (delimit $pageLayoutStyles " ") | safeCSS }}>
-        {{ range .Resources.Match "blocks/*.md" }}
+        {{ range sort (.Resources.Match "blocks/*.md") "File.Path" }}
 
         {{ $blockLayoutClasses := .Params.classes }}
         {{ $blockLayoutStyles := .Params.styles }}
