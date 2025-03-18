@@ -16,7 +16,9 @@
     {{ end }}
 {{ end }}
 
-<link href="{{ "css/main.css" | relURL }}" rel="stylesheet" />
+{{ with .Site.Params.theme }}
+    <link href="{{ ( printf "css/%s.css" . ) | relURL }}" rel="stylesheet" />
+{{ end }}
 
 <!--Include styles added by front matter -->
 {{ if .Params.css }}
