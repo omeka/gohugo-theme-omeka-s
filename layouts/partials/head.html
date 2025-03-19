@@ -20,6 +20,8 @@
     <link href="{{ ( printf "css/%s.css" . ) | relURL }}" rel="stylesheet" />
 {{ end }}
 
+<link href="{{ "css/omeka-defaults.css" | relURL }}" rel="stylesheet" />
+
 <!--Include styles added by front matter -->
 {{ if .Params.css }}
     {{ range .Params.css | uniq }}
