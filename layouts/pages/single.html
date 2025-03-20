@@ -1,7 +1,7 @@
 {{ define "main" }}
 
-{{ $pageLayoutClasses := .Params.classes }}
-{{ $pageLayoutStyles := .Params.styles }}
+{{ $pageLayoutClasses := .Params.layoutClasses }}
+{{ $pageLayoutStyles := .Params.layoutStyles }}
 {{ $inBlockGroup := false }}
 {{ $blockGroupSpan := 0 }}
 {{ $blockGroupCurrentSpan := 0 }}
@@ -10,8 +10,8 @@
     <div class="blocks-inner {{ delimit $pageLayoutClasses " " }}" style={{ (delimit $pageLayoutStyles " ") | safeCSS }}>
         {{ range sort (.Resources.Match "blocks/*.md") "File.Path" }}
 
-        {{ $blockLayoutClasses := .Params.classes }}
-        {{ $blockLayoutStyles := .Params.styles }}
+        {{ $blockLayoutClasses := .Params.layoutClasses }}
+        {{ $blockLayoutStyles := .Params.layoutStyles }}
 
         {{ with .Site.GetPage (printf "/assets/%s" .Params.layoutData.background_image_asset) }}
             {{ with .Resources.GetMatch "file*" }}
