@@ -3,7 +3,7 @@
 <head>
   {{ partial "head.html" . }}
 </head>
-<body>
+<body class="{{ with .Params.bodyClasses }}{{ delimit . " " }}{{ end }}">
   <header>
     {{ partial "header.html" . }}
   </header>
