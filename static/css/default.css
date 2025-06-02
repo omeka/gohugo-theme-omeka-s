@@ -385,6 +385,19 @@
     font-size: 15px;
     margin: 15px 0; }
 
+  ul.pagination {
+    list-style: none;
+    padding-left: 0; }
+    ul.pagination li {
+      display: inline-block; }
+    ul.pagination a {
+      background-color: #ddd;
+      color: #000;
+      font-weight: normal;
+      padding: 0 7.5px;
+      display: inline-block;
+      border-radius: 2px; }
+
   /* @end */
   /* @group ----- Header ----- */
   h1.site-title {
