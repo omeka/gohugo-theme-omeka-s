@@ -13,7 +13,7 @@
             {{ with $thumbnailResource }}<img src="{{ .RelPermalink }}" height="50" alt="">{{ end }}
             <span>{{ .LinkTitle }}</span>
         </a>
-        {{ with .Params.description }}<div class="description">{{ . }}</div>{{ end }}
+        {{ with .Params.description }}<div class="description">{{ . | truncate 600 }}</div>{{ end }}
     </li>
 {{ end }}
 </ul>
