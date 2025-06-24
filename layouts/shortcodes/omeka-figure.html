@@ -40,17 +40,17 @@ Renders an HTML figure element in any page context.
 
 <figure>
     {{ if eq $type "audio" }}
-        <audio controls src="{{ $fileResource.RelPermalink }}">
+        {{ with $fileResource }}<audio controls src="{{ $fileResource.RelPermalink }}">{{ end }}
     {{ else if eq $type "video" }}
-        <video controls src="{{ $fileResource.RelPermalink }}">
+        {{ with $fileResource }}<video controls src="{{ $fileResource.RelPermalink }}">{{ end }}
     {{ end }}
     {{ with $linkResource }}<a href="{{ .RelPermalink }}">{{ end }}
     {{ with $imgResource }}<img src="{{ .RelPermalink }}">{{ end }}
     {{ with $linkResource }}</a>{{ end }}
     {{ if eq $type "audio" }}
-    </audio>
+        {{ with $fileResource }}</audio>{{ end }}
     {{ else if eq $type "video" }}
-    </video>
+        {{ with $fileResource }}</video>{{ end }}
     {{ end }}
     {{ with .Get "caption" }}
     <figcaption>
