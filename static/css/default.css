@@ -1229,5 +1229,19 @@
     padding-top: 29px; }
 
   /* @end */ }
+ul.pagination {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: -7.5px; }
+  ul.pagination li {
+    display: inline-block;
+    margin-bottom: 7.5px; }
+  ul.pagination a {
+    background-color: #ddd;
+    color: #000;
+    font-weight: normal;
+    padding: 0 7.5px;
+    display: inline-block;
+    border-radius: 2px; }
 
 /*# sourceMappingURL=default.css.map */
