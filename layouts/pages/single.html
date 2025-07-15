@@ -13,10 +13,12 @@
         {{ $blockLayoutClasses := .Params.layoutClasses }}
         {{ $blockLayoutStyles := .Params.layoutStyles }}
 
+        {{ if and .Params.layoutData .Params.layoutData.background_image_asset }}
         {{ with .Site.GetPage (printf "/assets/%s" .Params.layoutData.background_image_asset) }}
             {{ with .Resources.GetMatch "file*" }}
                 {{ $blockLayoutStyles = $blockLayoutStyles | append (printf "background-image: url(\"%s\")" .RelPermalink ) }}
             {{ end }}
+        {{ end }}
         {{ end }}
 
         {{ if eq .Params.layout "blockGroup" }}
