@@ -38,7 +38,7 @@ Renders an HTML figure element in any page context.
     {{ $linkResource = site.GetPage (.Get "linkPage") }}
 {{ end }}
 
-<figure>
+<figure{{ with .Get "class" }} class="{{ . }}"{{ end }}>
     {{ if eq $type "audio" }}
         {{ with $fileResource }}<audio controls src="{{ $fileResource.RelPermalink }}">{{ end }}
     {{ else if eq $type "video" }}
